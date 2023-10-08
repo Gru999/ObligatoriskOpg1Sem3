@@ -67,5 +67,16 @@ namespace BookUnitTest
             //Act & Assert
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => book.Validate());
         }
+
+        [TestMethod]
+        public void ValidateTitleAndPriceInput() 
+        {
+            //Arrange
+            Book book = new Book {Id = 1, Title = "Harry Potter", Price = 120 };
+
+            //Act & Assert
+            Assert.IsTrue(book.ValidateTitle());
+            Assert.IsTrue(book.ValidatePrice());
+        }
     }
 }

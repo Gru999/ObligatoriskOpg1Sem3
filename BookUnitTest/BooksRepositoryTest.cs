@@ -65,5 +65,60 @@ namespace BookUnitTest
             Assert.AreEqual(book.Title, deletedBook.Title);
             Assert.AreEqual(book.Price, deletedBook.Price);
         }
+
+        [TestMethod]
+        public void GetBooksByPrice()
+        {
+            //Arrange
+            BooksRepository booksRepository = new BooksRepository();
+            booksRepository.Add(new Book { Id = 1, Title = "Harry Potter", Price = 120 });
+            booksRepository.Add(new Book { Id = 2, Title = "Lord of the Rings", Price = 150 });
+            booksRepository.Add(new Book { Id = 3, Title = "The Hobbit", Price = 200 });
+            booksRepository.Add(new Book { Id = 4, Title = "Frankenstein", Price = 120 });
+
+            //Act
+            var requestedBooks = booksRepository.Get(120);
+
+            //Assert
+            Assert.IsNotNull(requestedBooks);
+            Assert.AreEqual(2, requestedBooks.Count);
+        }
+
+        [TestMethod]
+        public void GetBooksByTitleAndPrice() 
+        {
+            //Arrange
+            BooksRepository booksRepository = new BooksRepository();
+            booksRepository.Add(new Book { Id = 1, Title = "Harry Potter", Price = 120 });
+            booksRepository.Add(new Book { Id = 2, Title = "Lord of the Rings", Price = 150 });
+            booksRepository.Add(new Book { Id = 3, Title = "The Hobbit", Price = 200 });
+            booksRepository.Add(new Book { Id = 4, Title = "Harry Potter", Price = 120 });
+
+            //Act
+            var requestedBooks = booksRepository.Get("Harry Potter", 120);
+
+            //Assert
+            Assert.IsNotNull(requestedBooks);
+            Assert.AreEqual(2, requestedBooks.Count);
+            Assert.AreEqual("Harry Potter", requestedBooks[0].Title);
+            Assert.AreEqual(120, requestedBooks[0].Price);
+        }
+
+        [TestMethod]
+        public void UpdateBook() 
+        {
+            //Arrange
+            BooksRepository booksRepository = new BooksRepository();
+            booksRepository.Add(new Book { Id = 1, Title = "Harry Potter", Price = 120 });
+            Book updateInfo = new Book { Id = 1, Title = "Frankenstein", Price= 200 };
+
+            //Act
+            Book updateBook = booksRepository.Update(1, updateInfo);
+
+            //Assert
+            Assert.IsNotNull(updateBook);
+            Assert.AreEqual(updateInfo.Title, updateBook.Title);
+            Assert.AreEqual(updateInfo.Price, updateBook.Price);            
+        }
     }
 }

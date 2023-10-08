@@ -42,33 +42,33 @@
         }
 
 
-        public void ValidateTitle() 
+        public bool ValidateTitle() 
         {
             if (Title == null)
             {
                 throw new ArgumentNullException("Title can't be null.");
             }
 
-            if(Title.Length < 3)
+            if(Title.Length <= 3)
             {
                 throw new ArgumentException("Title must be more than 3 chars.");
             }
-        
+            return true;        
         }
 
-        public void ValidatePrice()
+        public bool ValidatePrice()
         {
             if(Price <= 0 || Price > 1200) 
             {
                 throw new ArgumentOutOfRangeException("Price is not within the range of 0 < Price <= 1200.");
             }
-
+            return true;
         }
 
         public void Validate() 
         {
             ValidateTitle();
-            ValidatePrice();
+            ValidatePrice();            
         }
     }
 }
